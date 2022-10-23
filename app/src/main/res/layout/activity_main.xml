@@ -1,20 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/lightGray"
-    tools:context=".MainActivity">
+    tools:context=".Activity.LoginActivity">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_token"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginHorizontal="10dp"
+        android:padding="10dp"
+        app:cardCornerRadius="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="20dp">
+
+            <EditText
+                android:id="@+id/et_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Username"
+                android:inputType="text"
+                android:padding="10dp" />
+
+            <EditText
+                android:id="@+id/et_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/et_login"
+                android:layout_marginTop="10dp"
+                android:inputType="textPassword"
+                android:hint="Password"
+                android:padding="10dp" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Login"
+                android:layout_centerHorizontal="true"
+                android:textAllCaps="false"
+                android:id="@+id/btn_login"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/et_password"/>
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Mohon Tunggu..."
-        android:id="@+id/tv_tunggu"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/cv_token"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:id="@+id/tv_register"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-         />
+        android:gravity="center"
+        android:text="Didn’t have an account? Register here!"/>
 
 </RelativeLayout>
