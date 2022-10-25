@@ -20,12 +20,14 @@ import id.mobile.ilhamr.Fragment.HomeFragment;
 import id.mobile.ilhamr.Fragment.ProfileFragment;
 import id.mobile.ilhamr.Fragment.TransactionFragment;
 import id.mobile.ilhamr.Model.UserModel;
+import id.mobile.ilhamr.MovieListener;
 import id.mobile.ilhamr.R;
 
-public class UtamaActivity extends AppCompatActivity{
+public class UtamaActivity extends AppCompatActivity implements MovieListener {
 
     BottomNavigationView bottomNavigationView;
     ArrayList<UserModel> userModeArrayList;
+    String userName, phoneNumber, email;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,13 +35,18 @@ public class UtamaActivity extends AppCompatActivity{
         getSupportActionBar().hide();
         userModeArrayList = new ArrayList<>();
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
-//        userModeArrayList = (ArrayList<UserModel>) getIntent().getSerializableExtra("UserDataArrayList");
-//        Log.e("TAG", "onCreate: " + userModeArrayList.toString() );
+        userModeArrayList = (ArrayList<UserModel>) getIntent().getBundleExtra("BUNDLE").getSerializable("ARRAYLIST");
         bottomNavigationView.setSelectedItemId(R.id.home);
+        for(UserModel userModel : userModeArrayList){
+            userName = userModel.getUserName();
+            phoneNumber = userModel.getUserPhoneNumber();
+            email = userModel.getUserEmail();
+        }
         HomeFragment homeFragment = new HomeFragment();
         TransactionFragment transactionFragment = new TransactionFragment();
-        ProfileFragment profileFragment = new ProfileFragment();
+        ProfileFragment profileFragment = new ProfileFragment(userName, phoneNumber, email);
         selectedCurrentFragment(homeFragment);
+
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -54,7 +61,6 @@ public class UtamaActivity extends AppCompatActivity{
                     break;
                     case R.id.profile: {
                         selectedCurrentFragment(profileFragment);
-
                     }
                     break;
 
@@ -72,4 +78,15 @@ public class UtamaActivity extends AppCompatActivity{
         ft.commit();
     }
 
+    @Override
+    public void addMovie(String movieName, String moviePrice) {
+        Log.e("TAG", "addMovie2: " );
+        TransactionFragment fragmentB = new TransactionFragment();
+        Bundle args = new Bundle();
+        args.putString("movieName", movieName);
+        args.putString("moviePrice", moviePrice);
+        fragmentB.setArguments(args);
+        Log.e("TAG", "addMovie: " +movieName );
+
+    }
 }

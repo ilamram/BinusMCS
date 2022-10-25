@@ -19,10 +19,6 @@ public class RegistrationActivity extends AppCompatActivity {
 
     Button btnRegister;
     EditText etUsername, etPassword, etEmail, etPhoneNumber;
-    ArrayList<UserModel> userModels = new ArrayList<>();
-    ArrayList<String> userString = new ArrayList<>();
-    UserModel userModel;
-    public ArrayList[] username = new ArrayList[1];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +47,6 @@ public class RegistrationActivity extends AppCompatActivity {
             Toast.makeText(this, "Invalid email input!", Toast.LENGTH_SHORT).show();
         }else {
             Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
-            intent.putExtra("From","Registration");
             intent.putExtra("UserName",username);
             intent.putExtra("Password",password);
             intent.putExtra("Email",email);

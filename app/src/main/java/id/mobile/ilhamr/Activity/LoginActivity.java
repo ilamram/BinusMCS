@@ -34,13 +34,6 @@ public class LoginActivity extends AppCompatActivity {
         etLogin = findViewById(R.id.et_login);
         btnLogin = findViewById(R.id.btn_login);
         etPassword = findViewById(R.id.et_password);
-        userModelString = new ArrayList<>();
-        userModel1 = new UserModel();
-        userModel1.setUserName("Bobby");
-        userModel1.setUserEmail("bobbyryan692@gmail.com");
-        userModel1.setUserPassword("123456");
-        userModel1.setUserPhoneNumber("085921150899");
-        userModelString.add(userModel1);
         if(getIntent().getExtras() != null) {
                 Toast.makeText(this, "Data has been added, UwU", Toast.LENGTH_SHORT).show();
                 userName = getIntent().getExtras().getString("UserName");
@@ -54,7 +47,6 @@ public class LoginActivity extends AppCompatActivity {
                 userModel.setUserPassword(password);
                 userModel.setUserPhoneNumber(phoneNumber);
                 userModelString.add(userModel);
-                Log.e("TAG", "onCreate: " + userModelString.size());
                 btnLogin.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -62,6 +54,9 @@ public class LoginActivity extends AppCompatActivity {
                             if(etLogin.getText().toString().equals(userModelString.get(i).getUserName()) && etPassword.getText().toString().equals(userModelString.get(i).getUserPassword())){
                                 Toast.makeText(LoginActivity.this, "Berhasil", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(LoginActivity.this, UtamaActivity.class);
+                                Bundle args = new Bundle();
+                                args.putSerializable("ARRAYLIST",userModelString);
+                                intent.putExtra("BUNDLE",args);
                                 startActivity(intent);
                             }else{
                                 Toast.makeText(LoginActivity.this, "Gagal", Toast.LENGTH_SHORT).show();
@@ -70,6 +65,13 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
         }else{
+            userModelString = new ArrayList<>();
+            userModel1 = new UserModel();
+            userModel1.setUserName("Bobby");
+            userModel1.setUserEmail("bobbyryan692@gmail.com");
+            userModel1.setUserPassword("123456");
+            userModel1.setUserPhoneNumber("085921150899");
+            userModelString.add(userModel1);
             btnLogin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -77,6 +79,9 @@ public class LoginActivity extends AppCompatActivity {
                         if(etLogin.getText().toString().equals(userModelString.get(i).getUserName()) && etPassword.getText().toString().equals(userModelString.get(i).getUserPassword())){
                             Toast.makeText(LoginActivity.this, "Berhasil", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(LoginActivity.this, UtamaActivity.class);
+                            Bundle args = new Bundle();
+                            args.putSerializable("ARRAYLIST",userModelString);
+                            intent.putExtra("BUNDLE",args);
                             startActivity(intent);
                         }else{
                             Toast.makeText(LoginActivity.this, "Gagal", Toast.LENGTH_SHORT).show();
@@ -98,17 +103,4 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.e("TAG", "onResume: " + userModelString.size() );
-        userModelString.add(userModel1);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.e("TAG", "onPause: " + userModelString.size() );
-//        userModelString.add(userModel1);
-    }
 }

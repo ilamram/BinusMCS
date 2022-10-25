@@ -1,6 +1,8 @@
 package id.mobile.ilhamr.Model;
 
-public class UserModel {
+import java.io.Serializable;
+
+public class UserModel implements Serializable {
 
     String userName, userPassword, userEmail, userPhoneNumber;
 
@@ -43,13 +45,4 @@ public class UserModel {
         this.userPhoneNumber = userPhoneNumber;
     }
 
-
-    @Override
-    public String toString() {
-        return "userName='" + userName + '\'' +
-                ", userPassword='" + userPassword + '\'' +
-                ", userEmail='" + userEmail + '\'' +
-                ", userPhoneNumber='" + userPhoneNumber + '\'' +
-                '}';
-    }
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,17 +17,19 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import id.mobile.ilhamr.Model.MovieModel;
+import id.mobile.ilhamr.MovieListener;
 import id.mobile.ilhamr.R;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder> {
 
     Context context;
     ArrayList<MovieModel> movieModelsArrayList;
+    MovieListener mCallback;
 
-
-    public MovieAdapter(Context context, ArrayList<MovieModel> movieModelsArrayList){
+    public MovieAdapter(Context context, ArrayList<MovieModel> movieModelsArrayList, MovieListener movieListener){
         this.context = context;
         this.movieModelsArrayList = movieModelsArrayList;
+        this.mCallback = movieListener;
     }
 
     @NonNull
@@ -55,6 +58,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
         holder.tvMovieTitle.setText(movieModelsArrayList.get(position).getMovieName());
         holder.tvDescriptionMovie.setText(movieModelsArrayList.get(position).getMovieDescription());
         holder.tvMoney.setText(movieModelsArrayList.get(position).getMoviePrice());
+        holder.btnBuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mCallback.addMovie(movieModelsArrayList.get(position).getMovieName(), movieModelsArrayList.get(position).getMoviePrice());
+            }
+        });
     }
 
     @Override
@@ -66,12 +75,18 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
 
         TextView tvMovieTitle, tvDescriptionMovie, tvMoney;
         ImageView ivMovie;
+        Button btnBuy;
+
         public MovieHolder(@NonNull View itemView) {
             super(itemView);
             tvMovieTitle = itemView.findViewById(R.id.txt_movie_title);
             tvDescriptionMovie = itemView.findViewById(R.id.tv_description_movie);
             tvMoney = itemView.findViewById(R.id.tv_money);
             ivMovie = itemView.findViewById(R.id.iv_movies);
+            btnBuy = itemView.findViewById(R.id.btn_buy);
         }
     }
+
+
+
 }
