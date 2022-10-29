@@ -15,14 +15,28 @@
         android:layout_gravity="center"
         android:src="@drawable/logo" />
 
+
+    <TextView
+        android:id="@+id/tv_aboutus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/img_avatar_profile"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="About Us" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/card_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_marginHorizontal="10dp"
         android:padding="10dp"
-        android:layout_below="@+id/img_avatar_profile"
+        android:layout_below="@+id/tv_aboutus"
         app:cardCornerRadius="10dp"
         app:cardElevation="2dp">
 

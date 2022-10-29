@@ -27,11 +27,27 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:padding="16dp">
 
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:id="@+id/iv_image"
+                    android:src="@drawable/megan"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:orientation="vertical">
+
                 <TextView
-                    android:id="@+id/tv_movie_title"
+                    android:id="@+id/tv_movies_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -44,55 +60,115 @@
 
 
                 <TextView
-                    android:id="@+id/lbl_start_date_book_detail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Start Date" />
+                    android:text="Harga Tiket" />
 
                 <TextView
-                    android:id="@+id/tv_harga_movie"
+                    android:id="@+id/tv_movies_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Bapak Sad senoesantara"
                     android:textSize="16sp"
                     android:textStyle="bold" />
-                <TextView
-                    android:id="@+id/lbl_time_end"
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="Negara" />
+
+                    <TextView
+                        android:id="@+id/tv_movie_country"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Negara"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="Rating" />
+
+                    <TextView
+                        android:id="@+id/tv_movie_rating"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Rating"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:layout_gravity="right"
+                        android:id="@+id/lnr_quantity">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            android:id="@+id/remove"
+                            android:src="@drawable/ic_baseline_remove_24"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="1"
+                            android:gravity="center"
+                            android:id="@+id/tv_quantity"/>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:id="@+id/add"
+                            android:src="@drawable/ic_baseline_add_24"/>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="End Date:" />
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:layout_gravity="right"
+                    android:layout_marginEnd="16dp"
+                    android:id="@+id/lnr_quantity">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:id="@+id/remove"
+                        android:src="@drawable/ic_baseline_remove_24"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="0"
+                        android:gravity="center"
+                        android:id="@+id/tv_quantity"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:id="@+id/add"
+                        android:src="@drawable/ic_baseline_add_24"/>
 
 
-
-
-
-                <TextView
-                    android:id="@+id/tv_schedule_end_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="End Date"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/lbl_status_book"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="Status" />
-
-                <TextView
-                    android:id="@+id/tv_status_book"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Returned"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-
-
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 

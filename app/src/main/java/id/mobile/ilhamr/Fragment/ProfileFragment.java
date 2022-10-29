@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import id.mobile.ilhamr.AboutUsActivity;
 import id.mobile.ilhamr.Activity.LoginActivity;
 import id.mobile.ilhamr.Model.UserModel;
 import id.mobile.ilhamr.R;
@@ -21,7 +22,7 @@ import id.mobile.ilhamr.R;
 
 public class ProfileFragment extends Fragment {
 
-    TextView tvUsername, tvPhoneNumber, tvEmail;
+    TextView tvUsername, tvPhoneNumber, tvEmail, tvAboutUs;
     ArrayList<UserModel> userModeArrayList;
     String userName, email, phoneNumber;
     UserModel userModel;
@@ -40,9 +41,9 @@ public class ProfileFragment extends Fragment {
         tvPhoneNumber = view.findViewById(R.id.tv_phonenumber);
         tvEmail = view.findViewById(R.id.tv_emails);
         btnLogOut = view.findViewById(R.id.btn_logout);
+        tvAboutUs = view.findViewById(R.id.tv_aboutus);
         userModeArrayList = new ArrayList<>();
         userModel = new UserModel();
-        Log.e("TAG", "onCreateView: test");
         tvUsername.setText(userName);
         tvPhoneNumber.setText(phoneNumber);
         tvEmail.setText(email);
@@ -53,6 +54,16 @@ public class ProfileFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        tvAboutUs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), AboutUsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+
         return view;
     }
 

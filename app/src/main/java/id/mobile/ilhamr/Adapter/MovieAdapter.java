@@ -1,6 +1,7 @@
 package id.mobile.ilhamr.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Callback;
@@ -16,6 +18,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import id.mobile.ilhamr.Activity.MovieDetailActivity;
 import id.mobile.ilhamr.Model.MovieModel;
 import id.mobile.ilhamr.MovieListener;
 import id.mobile.ilhamr.R;
@@ -35,7 +38,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
     @NonNull
     @Override
     public MovieAdapter.MovieHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_movie, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_movie_cover, parent, false);
         return new MovieHolder(itemView);
     }
 
@@ -55,13 +58,18 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
                         //unnecessary and its ok to be empty
                     }
                 });
-        holder.tvMovieTitle.setText(movieModelsArrayList.get(position).getMovieName());
-        holder.tvDescriptionMovie.setText(movieModelsArrayList.get(position).getMovieDescription());
-        holder.tvMoney.setText(movieModelsArrayList.get(position).getMoviePrice());
-        holder.btnBuy.setOnClickListener(new View.OnClickListener() {
+
+        holder.cvMovie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mCallback.addMovie(movieModelsArrayList.get(position).getMovieName(), movieModelsArrayList.get(position).getMoviePrice());
+                Intent intent = new Intent(context, MovieDetailActivity.class);
+                intent.putExtra("Movie Title", movieModelsArrayList.get(position).getMovieName());
+                intent.putExtra("Movie Rating", movieModelsArrayList.get(position).getMovieRating());
+                intent.putExtra("Movie Description", movieModelsArrayList.get(position).getMovieDescription());
+                intent.putExtra("Movie Country", movieModelsArrayList.get(position).getMovieCountry());
+                intent.putExtra("Movie Price", movieModelsArrayList.get(position).getMoviePrice());
+                intent.putExtra("Movie Image", movieModelsArrayList.get(position).getImgDrawable());
+                context.startActivity(intent);
             }
         });
     }
@@ -73,17 +81,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
 
     public class MovieHolder extends RecyclerView.ViewHolder{
 
-        TextView tvMovieTitle, tvDescriptionMovie, tvMoney;
         ImageView ivMovie;
-        Button btnBuy;
+        CardView cvMovie;
 
         public MovieHolder(@NonNull View itemView) {
             super(itemView);
-            tvMovieTitle = itemView.findViewById(R.id.txt_movie_title);
-            tvDescriptionMovie = itemView.findViewById(R.id.tv_description_movie);
-            tvMoney = itemView.findViewById(R.id.tv_money);
             ivMovie = itemView.findViewById(R.id.iv_movies);
-            btnBuy = itemView.findViewById(R.id.btn_buy);
+            cvMovie = itemView.findViewById(R.id.cv_movie);
         }
     }
 

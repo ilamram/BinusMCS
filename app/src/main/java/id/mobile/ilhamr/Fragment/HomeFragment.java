@@ -29,52 +29,24 @@ public class HomeFragment extends Fragment {
     RecyclerView rvMovies;
     MovieAdapter movieAdapter;
     LinearLayoutManager lnrLayoutManager;
-    MovieModel movieModel;
-    MovieModel movieModel1;
     ArrayList<MovieModel> movieModelsArrayList;
-    TransactionModel transactionModel;
-    ArrayList<TransactionModel> transactionModelArrayList;
-    String movieName, moviePrice;
     MovieListener movieListener;
+
+    public HomeFragment(ArrayList<MovieModel> movieModelsArrayList){
+        this.movieModelsArrayList = movieModelsArrayList;
+    }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         rvMovies = view.findViewById(R.id.rv_movie_list);
-
-        movieModelsArrayList = new ArrayList<>();
-        movieModel = new MovieModel();
-        movieModel.setImgDrawable(R.drawable.breakingbad);
-        movieModel.setMovieName("Breaking Bad");
-        movieModel.setMoviePrice("Rp. 500.000,00");
-        movieModel.setMovieDescription("Walter White is on the hustle");
-        movieModelsArrayList.add(movieModel);
-
-        movieModel1 = new MovieModel();
-        movieModel1.setImgDrawable(R.drawable.megan);
-        movieModel1.setMovieName("MEGAN");
-        movieModel1.setMoviePrice("Rp. 500.000,00");
-        movieModel1.setMovieDescription("The doll that slays");
-        movieModelsArrayList.add(movieModel1);
-
         lnrLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         rvMovies.setLayoutManager(lnrLayoutManager);
         movieAdapter = new MovieAdapter(getActivity(), movieModelsArrayList, movieListener);
         rvMovies.setAdapter(movieAdapter);
-
         return view;
     }
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        try
-        {
-            movieListener = (MovieListener) context;
-        }
-        catch (ClassCastException e)
-        {
-            throw new ClassCastException(context.toString()+ " must implement OnImageClickListener");
-        }
-    }
 }

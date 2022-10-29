@@ -36,4 +36,20 @@ public class MovieModel {
     public void setMovieDescription(String movieDescription) {
         this.movieDescription = movieDescription;
     }
+
+    public String getMovieRating() {
+        return movieRating;
+    }
+
+    public void setMovieRating(String movieRating) {
+        this.movieRating = movieRating;
+    }
+
+    public String getMovieCountry() {
+        return movieCountry;
+    }
+
+    public void setMovieCountry(String movieCountry) {
+        this.movieCountry = movieCountry;
+    }
 }
