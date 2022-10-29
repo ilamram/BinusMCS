@@ -22,7 +22,6 @@ public class LoginActivity extends AppCompatActivity {
 
     TextView tvRegister;
     UserModel userModel;
-    UserModel userModel1;
     Button btnLogin;
     String userName, password, email, phoneNumber;
     EditText etLogin, etPassword;

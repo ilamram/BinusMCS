@@ -72,8 +72,6 @@ public class MovieDetailActivity extends AppCompatActivity {
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
-//                this.addMovie(movieName, moviePrice);
                 Intent intent = new Intent(MovieDetailActivity.this, UtamaActivity.class);
                 intent.putExtra("movieName", movieName);
                 intent.putExtra("moviePrice", moviePrice);
