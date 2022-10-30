@@ -50,6 +50,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         holder.tvHargaMovie.setText(transactionModelArrayList.get(position).getMoviePrice());
         holder.tvMoviesRating.setText(transactionModelArrayList.get(position).getMoviesRating());
         holder.tvMoviesCountry.setText(transactionModelArrayList.get(position).getMoviesCountry());
+        holder.tvQuantity.setText(String.valueOf(transactionModelArrayList.get(position).getMovieQty()));
         Picasso.Builder builder = new Picasso.Builder(context);
         Picasso picasso = builder.build();
         picasso.load(transactionModelArrayList.get(position).getImgMovie())
@@ -82,7 +83,6 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
                     alertDialog.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     movieListenerLister.sendArrayList(position, true);
-//                                    transactionModelArrayList.remove(position);
                                 }
                             })
                             .show();
@@ -110,6 +110,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
         TextView tvMovieTitle, tvHargaMovie, tvMoviesRating, tvMoviesCountry, tvQuantity;
         ImageView ivCover, remove, add;
+
         public TransactionHolder(@NonNull View itemView) {
             super(itemView);
             tvMovieTitle = itemView.findViewById(R.id.tv_movies_title);

@@ -34,13 +34,15 @@ public class TransactionFragment extends Fragment implements MovieListener{
     MovieListener movieListener;
     int movieImg;
     Boolean conditions = false;
+    String movieTickets;
 
-    public TransactionFragment(String moviesName, String moviesPrice,  String moviesCountry, String moviesRating, int movieImg){
+    public TransactionFragment(String moviesName, String moviesPrice,  String moviesCountry, String moviesRating, int movieImg, String movieTickets){
         this.moviesName = moviesName;
         this.moviesPrice = moviesPrice;
         this.moviesCountry = moviesCountry;
         this.moviesRating = moviesRating;
         this.movieImg = movieImg;
+        this.movieTickets = movieTickets;
     }
 
     @Override
@@ -60,6 +62,7 @@ public class TransactionFragment extends Fragment implements MovieListener{
                 transactionModel.setMoviesRating(moviesRating);
                 transactionModel.setMoviesCountry(moviesCountry);
                 transactionModel.setImgMovie(movieImg);
+                transactionModel.setMovieQty(movieTickets);
                 transactionModelArrayList.add(transactionModel);
             }
         }else{

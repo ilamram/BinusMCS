@@ -34,7 +34,7 @@ public class UtamaActivity extends AppCompatActivity{
     String userName, phoneNumber, email;
     ArrayList<MovieModel> movieModelsArrayList;
     MovieModel movieModel, movieModel1, movieModel2;
-    String movieName, moviePrice, moviesRating, moviesCountry;
+    String movieName, moviePrice, moviesRating, moviesCountry, movieTickets;
     SharedPreferences sharedPreferences;
     int movieImg;
     @Override
@@ -53,6 +53,7 @@ public class UtamaActivity extends AppCompatActivity{
             moviesCountry = getIntent().getExtras().getString("movieCountry");
             moviesRating = getIntent().getExtras().getString("movieRating");
             movieImg = getIntent().getExtras().getInt("movieImg");
+            movieTickets = getIntent().getExtras().getString("movieQuantity");
             Log.e("TAG", "Movie Rating: " + moviesRating + "Movie Country: " + moviesCountry);
         }
 //        userModeArrayList = (ArrayList<UserModel>) getIntent().getBundleExtra("bundle").getSerializable("userModelArray");
@@ -92,7 +93,7 @@ public class UtamaActivity extends AppCompatActivity{
         movieModelsArrayList.add(movieModel2);
 
         HomeFragment homeFragment = new HomeFragment(movieModelsArrayList);
-        TransactionFragment transactionFragment = new TransactionFragment( movieName, moviePrice, moviesCountry, moviesRating, movieImg);
+        TransactionFragment transactionFragment = new TransactionFragment( movieName, moviePrice, moviesCountry, moviesRating, movieImg, movieTickets);
         ProfileFragment profileFragment = new ProfileFragment(userName, phoneNumber, email);
         selectedCurrentFragment(homeFragment);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {

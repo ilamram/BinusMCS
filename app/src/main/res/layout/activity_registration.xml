@@ -61,5 +61,14 @@
         android:layout_marginTop="10dp"
         android:layout_below="@+id/et_regis_phone_number"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:id="@+id/tv_register"
+        android:layout_below="@+id/btn_register"
+        android:text="Already has an account? Log in here!"/>
+
 
 </RelativeLayout>

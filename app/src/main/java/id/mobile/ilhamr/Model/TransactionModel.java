@@ -2,8 +2,16 @@ package id.mobile.ilhamr.Model;
 
 public class TransactionModel {
     
-    String movieName, moviePrice, moviesRating, moviesCountry;
+    String movieName, moviePrice, moviesRating, moviesCountry, movieQty;
     int imgMovie;
+
+    public String getMovieQty() {
+        return movieQty;
+    }
+
+    public void setMovieQty(String movieQty) {
+        this.movieQty = movieQty;
+    }
 
     public int getImgMovie() {
         return imgMovie;

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import id.mobile.ilhamr.R;
 public class RegistrationActivity extends AppCompatActivity {
 
     Button btnRegister;
+    TextView tvRegister;
     EditText etUsername, etPassword, etEmail, etPhoneNumber;
 
     @Override
@@ -30,10 +32,18 @@ public class RegistrationActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.et_regis_password);
         etEmail = findViewById(R.id.et_regis_email);
         etPhoneNumber = findViewById(R.id.et_regis_phone_number);
+        tvRegister = findViewById(R.id.tv_register);
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 validasi(etUsername.getText().toString(), etPassword.getText().toString(), etEmail.getText().toString(), etPhoneNumber.getText().toString());
+            }
+        });
+        tvRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
+                startActivity(intent);
             }
         });
 
