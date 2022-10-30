@@ -1,12 +1,16 @@
 package id.mobile.ilhamr.Adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,14 +20,20 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import id.mobile.ilhamr.Activity.LoginActivity;
 import id.mobile.ilhamr.Model.TransactionModel;
+import id.mobile.ilhamr.MovieListener;
 import id.mobile.ilhamr.R;
 
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.TransactionHolder> {
+
     Context context;
     ArrayList<TransactionModel> transactionModelArrayList;
-    public TransactionAdapter(Context context, ArrayList<TransactionModel> transactionModelArrayList){
+    MovieListener movieListenerLister;
+
+    public TransactionAdapter(Context context, MovieListener movieListener, ArrayList<TransactionModel> transactionModelArrayList){
         this.context = context;
+        this.movieListenerLister = movieListener;
         this.transactionModelArrayList = transactionModelArrayList;
     }
 
@@ -66,7 +76,19 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             public void onClick(View view) {
                 String stringQuantity = holder.tvQuantity.getText().toString();
                 Integer quantity = Integer.parseInt(stringQuantity);
-                quantity--;
+                if(quantity <= 1){
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+                    alertDialog.setMessage("Are you sure, you want to set your purchase quantity to 0 ?");
+                    alertDialog.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    movieListenerLister.sendArrayList(position, true);
+//                                    transactionModelArrayList.remove(position);
+                                }
+                            })
+                            .show();
+                }else{
+                    quantity--;
+                }
                 holder.tvQuantity.setText(quantity.toString());
             }
         });

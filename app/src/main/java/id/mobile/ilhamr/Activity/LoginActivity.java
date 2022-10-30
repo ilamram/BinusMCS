@@ -37,11 +37,13 @@ public class LoginActivity extends AppCompatActivity {
         etLogin = findViewById(R.id.et_login);
         btnLogin = findViewById(R.id.btn_login);
         etPassword = findViewById(R.id.et_password);
+        //Untuk kak Lucas, gua pakai shared preference sesuai dengan dokumentasi di https://developer.android.com/reference/android/content/SharedPreferences.
+        //Karena setelah gua coba coba terus menerus. Android ga bisa simpen data deh waktu finish state atau yang gw maksud itu OnDestroy.
         sharedPreferences = getSharedPreferences(getString(R.string.savedKey), MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         if(getIntent().getExtras() != null) {
-                Toast.makeText(this, "Data has been added, UwU", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Data has been added", Toast.LENGTH_SHORT).show();
                 userName = getIntent().getExtras().getString("UserName");
                 password = getIntent().getExtras().getString("Password");
                 email = getIntent().getExtras().getString("Email");
@@ -53,7 +55,6 @@ public class LoginActivity extends AppCompatActivity {
                 userModel.setUserPassword(password);
                 userModel.setUserPhoneNumber(phoneNumber);
                 userModelString.add(userModel);
-
                 btnLogin.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -98,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
 //                    }
                 }
             });
-            Toast.makeText(this, "Welcome to our Page, UwU", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Welcome to our Page", Toast.LENGTH_SHORT).show();
         }
         tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override

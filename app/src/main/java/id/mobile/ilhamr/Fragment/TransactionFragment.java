@@ -23,7 +23,7 @@ import id.mobile.ilhamr.MovieListener;
 import id.mobile.ilhamr.R;
 
 
-public class TransactionFragment extends Fragment{
+public class TransactionFragment extends Fragment implements MovieListener{
 
     RecyclerView rvTransaction;
     TransactionAdapter transactionAdapter;
@@ -33,6 +33,8 @@ public class TransactionFragment extends Fragment{
     ArrayList<TransactionModel> transactionModelArrayList;
     MovieListener movieListener;
     int movieImg;
+    Boolean conditions = false;
+
     public TransactionFragment(String moviesName, String moviesPrice,  String moviesCountry, String moviesRating, int movieImg){
         this.moviesName = moviesName;
         this.moviesPrice = moviesPrice;
@@ -45,25 +47,46 @@ public class TransactionFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_transaction, container, false);
+        Log.e("TAG", "onCreateView: ");
         rvTransaction = view.findViewById(R.id.rv_transactions);
-        if(moviesName != null) {
-            transactionModelArrayList = new ArrayList<>();
-            transactionModel = new TransactionModel();
-            transactionModel.setMoviePrice(moviesPrice);
-            transactionModel.setMovieName(moviesName);
-            transactionModel.setMoviesRating(moviesRating);
-            transactionModel.setMoviesCountry(moviesCountry);
-            transactionModel.setImgMovie(movieImg);
-            transactionModelArrayList.add(transactionModel);
-        }
+        //Untuk Aslab, setelah gua cek ternyata tiap kali kita pilih salah satu menu di bottom view navigation menu dia selalu di cycle on create
+        //Jadi terpaksa gw buat kondisi boolean untuk tau kalau state dia dimana sekarang. Thx.
+        if(!conditions) {
+            if (moviesName != null) {
+                transactionModelArrayList = new ArrayList<>();
+                transactionModel = new TransactionModel();
+                transactionModel.setMoviePrice(moviesPrice);
+                transactionModel.setMovieName(moviesName);
+                transactionModel.setMoviesRating(moviesRating);
+                transactionModel.setMoviesCountry(moviesCountry);
+                transactionModel.setImgMovie(movieImg);
+                transactionModelArrayList.add(transactionModel);
+            }
+        }else{
+            transactionModelArrayList.clear();
+            transactionAdapter.notifyDataSetChanged();
 
+        }
         lnrLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         rvTransaction.setLayoutManager(lnrLayoutManager);
-        transactionAdapter = new TransactionAdapter(getActivity(), transactionModelArrayList);
+        transactionAdapter = new TransactionAdapter(getActivity(), TransactionFragment.this, transactionModelArrayList);
         rvTransaction.setAdapter(transactionAdapter);
 
         return view;
     }
 
 
+    @Override
+    public void sendArrayList(int transactionModelArrayLists, boolean condition) {
+        conditions = condition;
+//        transactionModelArrayList.remove(transactionModelArrayLists);
+        transactionModelArrayList.clear();
+        transactionAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.e("TAG", "onPause: " );
+    }
 }

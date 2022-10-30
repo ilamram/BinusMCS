@@ -41,8 +41,12 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     private void validasi(String username, String password, String email, String phoneNumber) {
-        if(username.equals("") || password.equals("") || email.equals("") || phoneNumber.equals("")) {
+        if (username.equals("") || password.equals("") || email.equals("") || phoneNumber.equals("")) {
             Toast.makeText(this, "Please fill out the form!", Toast.LENGTH_SHORT).show();
+        }else if(username.equals("Ilham")){
+            Toast.makeText(this, "Username must be unique", Toast.LENGTH_SHORT).show();
+        }else if(!(password.length() > 5)){
+            Toast.makeText(this, "Password must be longer", Toast.LENGTH_SHORT).show();
         }else if(!email.contains(".com")){
             Toast.makeText(this, "Invalid email input!", Toast.LENGTH_SHORT).show();
         }else {

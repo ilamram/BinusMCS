@@ -1,5 +1,7 @@
 package id.mobile.ilhamr.Fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -23,10 +25,9 @@ import id.mobile.ilhamr.R;
 public class ProfileFragment extends Fragment {
 
     TextView tvUsername, tvPhoneNumber, tvEmail, tvAboutUs;
-    ArrayList<UserModel> userModeArrayList;
     String userName, email, phoneNumber;
-    UserModel userModel;
     Button btnLogOut;
+
     public ProfileFragment(String userName,String email,String phoneNumber){
         this.userName = userName;
         this.email = email;
@@ -42,16 +43,21 @@ public class ProfileFragment extends Fragment {
         tvEmail = view.findViewById(R.id.tv_emails);
         btnLogOut = view.findViewById(R.id.btn_logout);
         tvAboutUs = view.findViewById(R.id.tv_aboutus);
-        userModeArrayList = new ArrayList<>();
-        userModel = new UserModel();
         tvUsername.setText(userName);
         tvPhoneNumber.setText(phoneNumber);
         tvEmail.setText(email);
         btnLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent);
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+                alertDialog.setMessage("Are you sure you want to Log out?");
+                alertDialog.setPositiveButton("Keluar", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                                startActivity(intent);
+                            }
+                        })
+                        .show();
             }
         });
         tvAboutUs.setOnClickListener(new View.OnClickListener() {
