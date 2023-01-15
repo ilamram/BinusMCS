@@ -4,8 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -13,21 +14,37 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
+import id.mobile.ilhamr.DBManager;
 import id.mobile.ilhamr.Model.UserModel;
 import id.mobile.ilhamr.R;
 
 public class LoginActivity extends AppCompatActivity {
 
     TextView tvRegister;
-    UserModel userModel;
     Button btnLogin;
-    String userName, password, email, phoneNumber;
     EditText etLogin, etPassword;
     ArrayList<UserModel> userModelString;
     SharedPreferences sharedPreferences;
-
+    DBManager dbManager;
+    SQLiteDatabase sqLiteDatabase;
+    SharedPreferences.Editor editor;
+    RequestQueue queue;
+    JsonObjectRequest jsonArrayRequest;
+    String url = "https://mocki.io/v1/ce4395c2-d593-45ae-b392-78fe2238369c";
+    UserModel userModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,70 +54,55 @@ public class LoginActivity extends AppCompatActivity {
         etLogin = findViewById(R.id.et_login);
         btnLogin = findViewById(R.id.btn_login);
         etPassword = findViewById(R.id.et_password);
-        //Untuk kak Lucas, gua pakai shared preference sesuai dengan dokumentasi di https://developer.android.com/reference/android/content/SharedPreferences.
-        //Karena setelah gua coba coba terus menerus. Android ga bisa simpen data deh waktu finish state atau yang gw maksud itu OnDestroy.
+        dbManager = new DBManager(LoginActivity.this);
         sharedPreferences = getSharedPreferences(getString(R.string.savedKey), MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        if(getIntent().getExtras() != null) {
-                Toast.makeText(this, "Data has been added", Toast.LENGTH_SHORT).show();
-                userName = getIntent().getExtras().getString("UserName");
-                password = getIntent().getExtras().getString("Password");
-                email = getIntent().getExtras().getString("Email");
-                phoneNumber = getIntent().getExtras().getString("PhoneNumber");
-                userModelString = new ArrayList<>();
-                userModel = new UserModel();
-                userModel.setUserName(userName);
-                userModel.setUserEmail(email);
-                userModel.setUserPassword(password);
-                userModel.setUserPhoneNumber(phoneNumber);
-                userModelString.add(userModel);
-                btnLogin.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        for(int i = 0; i < userModelString.size() ; i++){
-                            if(etLogin.getText().toString().equals(userModelString.get(i).getUserName()) && etPassword.getText().toString().equals(userModelString.get(i).getUserPassword())){
-                                Toast.makeText(LoginActivity.this, "Berhasil", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(LoginActivity.this, UtamaActivity.class);
-                                editor.putString("userName", userName);
-                                editor.putString("email", email);
-                                editor.putString("phoneNumber", phoneNumber);
-                                editor.apply();
-                                startActivity(intent);
-                            }else{
-                                Toast.makeText(LoginActivity.this, "Gagal", Toast.LENGTH_SHORT).show();
+        dbManager = new DBManager(LoginActivity.this);
+        sqLiteDatabase = dbManager.getReadableDatabase();
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(validasi()){
+                    jsonArrayRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                JSONArray jsonArray = response.getJSONArray("films");
+                                for(int i = 0 ; i < jsonArray.length() ; i++){
+                                    JSONObject jsonFilmObject = jsonArray.getJSONObject(i);
+                                    if(!dbManager.checkedValueList(jsonFilmObject.optString("title"))) {
+                                        dbManager.saveMovie(jsonFilmObject.optString("title"),
+                                                jsonFilmObject.optString("price"),
+                                                jsonFilmObject.optString("rating"),
+                                                jsonFilmObject.optString("country"),
+                                                jsonFilmObject.optString("description"),
+                                                jsonFilmObject.optString("image"));
+                                    }
+                                }
+                            }catch (JSONException e){
+                                e.printStackTrace();
                             }
                         }
-                    }
-                });
-        }else{
-//            userModelString = new ArrayList<>();
-//            userModel1 = new UserModel();
-//            userModel1.setUserName("Ilham");
-//            userModel1.setUserEmail("Ilham@gmail.com");
-//            userModel1.setUserPassword("123456");
-//            userModel1.setUserPhoneNumber("08254412250899");
-//            userModelString.add(userModel1);
-            btnLogin.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-//                    for(int i = 0; i < userModelString.size() ; i++){
-                        if(etLogin.getText().toString().equals("Ilham") && etPassword.getText().toString().equals("123456")){
-                            Toast.makeText(LoginActivity.this, "Berhasil", Toast.LENGTH_SHORT).show();
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                        }
+                    });
+                    queue = Volley.newRequestQueue(LoginActivity.this);
+                    queue.add(jsonArrayRequest);
+                    userModel = dbManager.gettinguserID(etLogin.getText().toString(), etPassword.getText().toString());
+                    new Handler().postDelayed(new Runnable() {
+                        public void run() {
                             Intent intent = new Intent(LoginActivity.this, UtamaActivity.class);
-                            editor.putString("userName", "Ilham");
-                            editor.putString("email", "Ilham@gmail.com");
-                            editor.putString("phoneNumber", "08254412250899");
+                            editor = sharedPreferences.edit();
+                            editor.putInt("userID", userModel.getId());
                             editor.apply();
                             startActivity(intent);
-                        }else{
-                            Toast.makeText(LoginActivity.this, "Gagal", Toast.LENGTH_SHORT).show();
                         }
-//                    }
+                    }, 3000);
                 }
-            });
-            Toast.makeText(this, "Welcome to our Page", Toast.LENGTH_SHORT).show();
-        }
+            }
+        });
         tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,5 +112,19 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
+    //validasi ketika user input login information mereka
+    private boolean validasi() {
+        if (etLogin.getText().equals("") || etLogin.length() == 0) {
+            Toast.makeText(this, "Username must be filled", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (etPassword.getText().equals("") || etPassword.length() == 0) {
+            Toast.makeText(this, "Password must be filled", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (!dbManager.checkUsername(etLogin.getText().toString(), etPassword.getText().toString())) {
+            Toast.makeText(this, "Please check your password and username", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+            return true;
+        }
 
-}
+    }

@@ -5,13 +5,15 @@ import java.io.Serializable;
 public class UserModel implements Serializable {
 
     String userName, userPassword, userEmail, userPhoneNumber;
+    int id;
 
-//    public User(String userName, String userPassword, String userEmail, String userPhoneNumber){
-//        this.userName = userName;
-//        this.userPassword = userPassword;
-//        this.userEmail = userEmail;
-//        this.userPhoneNumber = userPhoneNumber;
-//    }
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getUserName() {
         return userName;

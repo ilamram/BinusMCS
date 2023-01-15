@@ -2,54 +2,39 @@ package id.mobile.ilhamr.Model;
 
 public class TransactionModel {
     
-    String movieName, moviePrice, moviesRating, moviesCountry, movieQty;
-    int imgMovie;
+    String transactionQty, transactionID, movieID, userID;
+
+    public String getMovieID() {
+        return movieID;
+    }
+
+    public void setMovieID(String movieID) {
+        this.movieID = movieID;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
 
     public String getMovieQty() {
-        return movieQty;
+        return transactionQty;
     }
 
-    public void setMovieQty(String movieQty) {
-        this.movieQty = movieQty;
+    public void setMovieQty(String transactionQty) {
+        this.transactionQty = transactionQty;
     }
 
-    public int getImgMovie() {
-        return imgMovie;
+    public String getTransactionId() {
+        return transactionID;
     }
 
-    public void setImgMovie(int imgMovie) {
-        this.imgMovie = imgMovie;
+    public void setTransactionId(String transactionID) {
+        this.transactionID = transactionID;
     }
 
-    public String getMoviesRating() {
-        return moviesRating;
-    }
 
-    public void setMoviesRating(String moviesRating) {
-        this.moviesRating = moviesRating;
-    }
-
-    public String getMoviesCountry() {
-        return moviesCountry;
-    }
-
-    public void setMoviesCountry(String moviesCountry) {
-        this.moviesCountry = moviesCountry;
-    }
-
-    public String getMovieName() {
-        return movieName;
-    }
-
-    public void setMovieName(String movieName) {
-        this.movieName = movieName;
-    }
-
-    public String getMoviePrice() {
-        return moviePrice;
-    }
-
-    public void setMoviePrice(String moviePrice) {
-        this.moviePrice = moviePrice;
-    }
 }

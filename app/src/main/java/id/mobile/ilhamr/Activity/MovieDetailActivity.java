@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Movie;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,20 +21,22 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import id.mobile.ilhamr.DBManager;
 import id.mobile.ilhamr.Model.MovieModel;
-import id.mobile.ilhamr.MovieListener;
+import id.mobile.ilhamr.Model.MovieVolleyModel.FilmsItem;
 import id.mobile.ilhamr.R;
 
 public class MovieDetailActivity extends AppCompatActivity {
 
-    int imgMovie;
+    String imgMovie, movieId;
     String movieName, movieRating, movieCountry, moviePrice, movieDescription;
     ImageView ivMovieDetail, add, remove;
     Button btnBuy;
     TextView tvMovieTitleDetails, tvQuantityTickets, tvMovieRatingDetails, tvMovieCountryDetails, tvMoviePriceDetails, tvMovieDescription;
-    MovieListener movieListener;
-    String stringQuantity;
-    int ticketQuantity;
+    DBManager dbManager;
+    SharedPreferences sharedPreferences;
+    int userID;
+    FilmsItem filmsItem;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,24 +51,28 @@ public class MovieDetailActivity extends AppCompatActivity {
         tvQuantityTickets = findViewById(R.id.tv_quantity_movie_detail);
         add = findViewById(R.id.add);
         remove = findViewById(R.id.remove);
-        imgMovie = getIntent().getExtras().getInt("Movie Image");
-        movieName = getIntent().getExtras().getString("Movie Title");
-        movieDescription = getIntent().getExtras().getString("Movie Description");
-        movieRating = getIntent().getExtras().getString("Movie Rating");
-        moviePrice = getIntent().getExtras().getString("Movie Price");
-        movieCountry = getIntent().getExtras().getString("Movie Country");
+        sharedPreferences = getSharedPreferences(getString(R.string.savedKey), MODE_PRIVATE);
+        userID = sharedPreferences.getInt("userID", 0);
+        dbManager = new DBManager(MovieDetailActivity.this);
+        movieId = getIntent().getExtras().getString("Movie ID");
+        filmsItem = dbManager.getFilmsDataById(movieId);
+//        imgMovie = getIntent().getExtras().getString("Movie Image");
+//        movieName = getIntent().getExtras().getString("Movie Title");
+//        movieDescription = getIntent().getExtras().getString("Movie Description");
+//        movieRating = getIntent().getExtras().getString("Movie Rating");
+//        moviePrice = getIntent().getExtras().getString("Movie Price");
+//        movieCountry = getIntent().getExtras().getString("Movie Country");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(movieName);
+        getSupportActionBar().setTitle(filmsItem.getTitle());
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_24);
-        tvMovieCountryDetails.setText(movieCountry);
-        tvMovieTitleDetails.setText(movieName);
-        tvMovieRatingDetails.setText(movieRating);
-        tvMoviePriceDetails.setText(moviePrice);
-        tvMovieDescription.setText(movieDescription);
-
+        tvMovieCountryDetails.setText(filmsItem.getCountry());
+        tvMovieTitleDetails.setText(filmsItem.getTitle());
+        tvMovieRatingDetails.setText(filmsItem.getRating());
+        tvMoviePriceDetails.setText("$ " + filmsItem.getPrice());
+        tvMovieDescription.setText(filmsItem.getDescription());
         Picasso.Builder builder = new Picasso.Builder(this);
         Picasso picasso = builder.build();
-        picasso.load(imgMovie)
+        picasso.load(filmsItem.getImage())
                 .into(ivMovieDetail, new Callback() {
                     @Override
                     public void onSuccess() {
@@ -101,13 +108,14 @@ public class MovieDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MovieDetailActivity.this, UtamaActivity.class);
-                intent.putExtra("movieName", movieName);
-                intent.putExtra("moviePrice", moviePrice);
-                intent.putExtra("movieCountry", movieCountry);
-                intent.putExtra("movieRating", movieRating);
-                intent.putExtra("movieImg", imgMovie);
-                Log.e("TAG", "onClick: " + ticketQuantity );
-                intent.putExtra("movieQuantity", tvQuantityTickets.getText().toString());
+                dbManager.saveTransaction(tvQuantityTickets.getText().toString(), String.valueOf(userID), movieId);
+//                intent.putExtra("movieName", movieName);
+//                intent.putExtra("moviePrice", moviePrice);
+//                intent.putExtra("movieCountry", movieCountry);
+//                intent.putExtra("movieRating", movieRating);
+//                intent.putExtra("movieImg", imgMovie);
+//                Log.e("TAG", "onClick: " + ticketQuantity );
+//                intent.putExtra("movieQuantity", tvQuantityTickets.getText().toString());
                 startActivity(intent);
             }
         });

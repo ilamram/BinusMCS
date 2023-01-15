@@ -1,5 +1,7 @@
 package id.mobile.ilhamr.Model;
 
+import android.provider.BaseColumns;
+
 public class MovieModel {
 
     String movieName, moviePrice, movieDescription, movieRating, movieCountry;
@@ -52,4 +54,8 @@ public class MovieModel {
     public void setMovieCountry(String movieCountry) {
         this.movieCountry = movieCountry;
     }
+
+
+
+
 }

@@ -19,8 +19,8 @@ import java.util.Objects;
 
 import id.mobile.ilhamr.Adapter.MovieAdapter;
 import id.mobile.ilhamr.Model.MovieModel;
+import id.mobile.ilhamr.Model.MovieVolleyModel.FilmsItem;
 import id.mobile.ilhamr.Model.TransactionModel;
-import id.mobile.ilhamr.MovieListener;
 import id.mobile.ilhamr.R;
 
 
@@ -29,13 +29,11 @@ public class HomeFragment extends Fragment {
     RecyclerView rvMovies;
     MovieAdapter movieAdapter;
     LinearLayoutManager lnrLayoutManager;
-    ArrayList<MovieModel> movieModelsArrayList;
-    MovieListener movieListener;
+    ArrayList<FilmsItem> filmsModeArrayList;
 
-    public HomeFragment(ArrayList<MovieModel> movieModelsArrayList){
-        this.movieModelsArrayList = movieModelsArrayList;
+    public HomeFragment(ArrayList<FilmsItem> filmsModeArrayList){
+        this.filmsModeArrayList = filmsModeArrayList;
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,7 +42,7 @@ public class HomeFragment extends Fragment {
         rvMovies = view.findViewById(R.id.rv_movie_list);
         lnrLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         rvMovies.setLayoutManager(lnrLayoutManager);
-        movieAdapter = new MovieAdapter(getActivity(), movieModelsArrayList, movieListener);
+        movieAdapter = new MovieAdapter(getActivity(), filmsModeArrayList);
         rvMovies.setAdapter(movieAdapter);
         return view;
     }

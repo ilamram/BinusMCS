@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+    <!-- Kalo sepahaman aku dalam permission declaring, Android app info ga akan muncul lokasi, storage, dan microphone kalau misalnya masih belum di declare disini -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true"
+        tools:ignore="WrongManifestParent" />
 
     <application
         android:allowBackup="true"
@@ -13,7 +20,14 @@
         android:theme="@style/Theme.IlhamR"
         tools:targetApi="31">
         <activity
-            android:name=".AboutUsActivity"
+            android:name=".Activity.MapActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Activity.AboutUsActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -48,11 +62,14 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDGVk05YWdtuWfQ6YSdvUU7TxbWEK0QZTY"/>
     </application>
 
 </manifest>

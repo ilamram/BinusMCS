@@ -3,8 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
     android:gravity="center"
-    tools:context=".AboutUsActivity">
+    tools:context=".Activity.AboutUsActivity">
 
     <TextView
         android:layout_width="match_parent"
@@ -40,5 +41,23 @@
         android:layout_below="@+id/img_avatar_profile"
         android:text="Bluejack Cinema is one of the most famous companies that provide high-quality films worldwide. Currently, Bluejack Cinema is trying to reach even more customers by creating a mobile application based on Android Operating System that may be downloaded by customers, thus increasing Bluejack Cinema's popularity. The application provides user authentication features, viewing all films, and buying the film."
         />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Locate Us"
+        android:layout_marginHorizontal="20dp"
+        android:id="@+id/btn_location"
+        android:layout_marginTop="10dp"
+        android:textAllCaps="false"
+        android:layout_below="@+id/tv_company_description"
+        />
+
+
+<!--    <com.google.android.gms.maps.MapView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@+id/tv_company_description"-->
+<!--        />-->
 
 </RelativeLayout>
